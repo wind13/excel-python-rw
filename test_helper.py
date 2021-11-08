@@ -17,6 +17,10 @@ class TestHelper(unittest.TestCase):
   def setUpClass(cls):
     print("this setupclass() method only called once.\n")
 
+  def test_find_sheets(self):
+    """Test find sheets"""
+    self.assertEqual(1, len(self.test_wb.worksheets))
+
   def test_find_in_range(self):
     """Test find_in_range(range)"""
     range_staff_ids = self.test_ws['F2:F178']

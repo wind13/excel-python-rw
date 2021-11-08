@@ -3,27 +3,37 @@ from openpyxl.utils import get_column_letter
 from openpyxl.comments import Comment
 from helper import find_in_range
 
-ot_xlsx = '加班数据-9月.xlsx'
-ot_sheet_name = 'Sheet1'
-ot_staff_id_column = 'F'
-ot_hours_column = 'N'
-ot_start_date_column = 'O'
-ot_end_date_column = 'P'
+# ot_xlsx = '加班数据-9月.xlsx'
+ot_xlsx = './2021/DBB OT request1105.xlsx'
+ot_default_sheet_name = 'Sheet1'
+# ot_sheet_name = 'OT'
+ot_staff_id_column = 'C'
+ot_hours_column = 'I'
+ot_start_date_column = 'J'
+ot_end_date_column = 'K'
 ot_start_row = 2
 
 ot_wb = load_workbook(ot_xlsx)
+n_ot_sheets = len(ot_wb.worksheets)
+# print('first sheet name: ', ot_wb.worksheets[0].title)
+ot_sheet0_name = ot_wb.worksheets[0].title
+ot_sheet_name = ot_sheet0_name if n_ot_sheets == 1 else ot_default_sheet_name
 ot_ws = ot_wb[ot_sheet_name]
 ot_end_row = ot_ws.max_row + 1
 
 # print(ot_end_row) # 178
 
-wh_xlsx = '9月billing人力-01.xlsx'
-wh_sheet_name = 'Sheet1'
-wh_staff_id_column = 'D'
+# wh_xlsx = '9月billing人力-01.xlsx'
+wh_xlsx = './2021/Oct supplier billing record for HSBC Audit.xlsx'
+wh_default_sheet_name = 'Sheet1'
+wh_staff_id_column = 'B'
 wh_start_row = 3
 wh_holiday_color = 'FFC4BD97'
 
 wh_wb = load_workbook(wh_xlsx)
+n_wh_sheets = len(wh_wb.worksheets)
+wh_sheet0_name = wh_wb.worksheets[0].title
+wh_sheet_name = wh_sheet0_name if n_wh_sheets == 1 else wh_default_sheet_name
 wh_ws = wh_wb[wh_sheet_name]
 
 # print(wh_ws.max_row) //378
@@ -46,7 +56,7 @@ for row in range(ot_start_row, ot_end_row):
 
   if staff_cell == None:
     print('这个 ' + str(staff_id) + ' 在人力表中没找到对应的行。')
-    break
+    continue
 
   range_day_from = 'A1'
   range_day_to = wh_end_column_letter + '1'
@@ -60,15 +70,16 @@ for row in range(ot_start_row, ot_end_row):
   # print(day_cell.fill.fgColor)
   # print(sid_day_value)
   # print(hours)
-  is_holiday = day_cell.fill.fgColor.rgb != None and day_cell.fill.fgColor.rgb == wh_holiday_color
-  h = hours if is_holiday else (8 + hours)
+  # is_holiday = day_cell.fill.fgColor.rgb != None and day_cell.fill.fgColor.rgb == wh_holiday_color
+  # h = hours if is_holiday else (8 + hours)
+  h = sid_day_value + hours
   wh_ws[day_cell.column_letter + str(staff_cell.row)] = h
   comment = Comment('extended service ' + str(h) + 'h', ' ')
   wh_ws[day_cell.column_letter + str(staff_cell.row)].comment = comment
 
   # print(sid_day_cell.value)
 
-wh_wb.save('ot_hours.xlsx')
+wh_wb.save('./2021/2021-1108-ot_hours.xlsx')
 
 # print(ot_ws[ot_end_date_column + str(ot_end_row)].column)
 # print(ot_ws[ot_end_date_column + str(ot_end_row)].column_letter)

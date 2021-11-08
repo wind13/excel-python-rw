@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 wb = load_workbook('加班数据.xlsx')
-print(wb.sheetnames)
+# print(wb.sheetnames)
 for sheet in  wb:
   print(sheet.title)
   print(sheet.max_row)
@@ -9,7 +9,7 @@ for sheet in  wb:
 
 template_xlsx = 'working hours 模板.xlsx'
 wb = load_workbook(template_xlsx)
-print(wb.sheetnames)
+# print(wb.sheetnames)
 for sheet in  wb:
   print(sheet.title)
   print(sheet.max_row)

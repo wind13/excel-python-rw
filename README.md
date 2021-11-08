@@ -27,3 +27,8 @@ sh run.sh
 ```
 pip freeze > requirements.txt
 ```
+
+## References
+
+- [openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files](https://openpyxl.readthedocs.io/en/stable/)
+- [openpyxl 模块](https://www.cnblogs.com/programmer-tlh/p/10461353.html)
