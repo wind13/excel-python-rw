@@ -1,15 +1,24 @@
+import sys
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.comments import Comment
 from helper import find_in_range, log
 
-user='jennifer'
-day='2021-10'
+# user='jennifer'
+# day='2021-10'
+
+# log('argv: ' + str(len(sys.argv)))
+if len(sys.argv) < 3:
+  log('需传入文件名 HR 和 day 部分，如：run.exe jennifer 2021-10')
+  sys.exit(0)
+
+user=sys.argv[1]
+day=sys.argv[2]
 
 log('start...')
 # ot_xlsx = '加班数据-9月.xlsx'
 # ot_xlsx = './2021/DBB OT request1105.xlsx'
-ot_xlsx = './2021/' + user + '-ot-' + day + '.xlsx'
+ot_xlsx = './' + user + '-ot-' + day + '.xlsx'
 ot_default_sheet_name = 'Sheet1'
 # ot_sheet_name = 'OT'
 #TODO 考虑通过查找相应的列名来定位具体的列： Resource ID, Start Date, End Date, Actual Hours involved
@@ -20,7 +29,7 @@ ot_end_date_column = 'L'
 ot_start_row = 2
 
 ot_wb = load_workbook(ot_xlsx)
-log('ot loaded...')
+# log('ot loaded...')
 n_ot_sheets = len(ot_wb.worksheets)
 # log('n_ot_sheets...' + str(n_ot_sheets))
 # log('first sheet name: ' + ot_wb.worksheets[0].title)
@@ -35,7 +44,7 @@ ot_end_row = ot_ws.max_row + 1
 # wh_xlsx = '9月billing人力-01.xlsx'
 # wh_xlsx = './2021/DBB-Oct supplier billing record for HSBC Audit.xlsx'
 # wh_xlsx = './2021/Jennifer-2021-10-Billing-HR.xlsx'
-wh_xlsx = './2021/' + user + '-staff-' + day + '.xlsx'
+wh_xlsx = './' + user + '-staff-' + day + '.xlsx'
 wh_default_sheet_name = 'Sheet1'
 wh_staff_id_column = 'B'
 wh_start_row = 3
@@ -100,7 +109,7 @@ for row in range(ot_start_row, ot_end_row):
   # log(sid_day_cell.value)
 
 # wh_wb.save('./2021/ruby-2021-1108-ot_hours.xlsx')
-wh_wb.save('./2021/' + user + '-result-' + day + '.xlsx')
+wh_wb.save('./' + user + '-result-' + day + '.xlsx')
 
 # log(ot_ws[ot_end_date_column + str(ot_end_row)].column)
 # log(ot_ws[ot_end_date_column + str(ot_end_row)].column_letter)
