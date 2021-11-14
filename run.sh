@@ -5,7 +5,7 @@
 
 # Next time run this:
 # workon excel_python_run
-pip install -r requirements.txt
+# pip install -r requirements.txt
 python run.py
 
 # Exit env:
